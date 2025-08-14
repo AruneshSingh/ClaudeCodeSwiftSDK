@@ -8,7 +8,24 @@ on:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: macos-14
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'push' && 
+       (contains(github.event.head_commit.message, 'feat:') ||
+        contains(github.event.head_commit.message, 'feat(') ||
+        contains(github.event.head_commit.message, 'fix:') ||
+        contains(github.event.head_commit.message, 'fix(') ||
+        contains(github.event.head_commit.message, 'perf:') ||
+        contains(github.event.head_commit.message, 'perf(') ||
+        contains(github.event.head_commit.message, 'revert:') ||
+        contains(github.event.head_commit.message, 'revert(') ||
+        contains(github.event.head_commit.message, 'refactor:') ||
+        contains(github.event.head_commit.message, 'refactor(') ||
+        contains(github.event.head_commit.message, 'test:') ||
+        contains(github.event.head_commit.message, 'test(') ||
+        contains(github.event.head_commit.message, 'build:') ||
+        contains(github.event.head_commit.message, 'build(')))
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +44,11 @@ jobs:
   release:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: |
+      always() &&
+      github.ref == 'refs/heads/main' && 
+      github.event_name == 'push' &&
+      (needs.test.result == 'success' || needs.test.result == 'skipped')
     steps:
       - name: Checkout
         uses: actions/checkout@v4
