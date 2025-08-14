@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build package
+        run: swift build
+
+      - name: Run tests
+        run: swift test
+
+  release:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_PERSONALTOKEN_SEMANTICRELEASE}}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install semantic-release
+        run: |
+          npm install -g semantic-release
+          npm install -g @semantic-release/git
+          npm install -g @semantic-release/github
+          npm install -g @semantic-release/changelog
+          npm install -g @semantic-release/commit-analyzer
+          npm install -g @semantic-release/release-notes-generator
+          npm install -g conventional-changelog-conventionalcommits
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PERSONALTOKEN_SEMANTICRELEASE}}
+        run: semantic-release
