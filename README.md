@@ -18,7 +18,7 @@ A Swift SDK for [Claude Code](https://claude.ai/code), providing programmatic ac
 ## 📋 Requirements
 
 - Swift 6.0+
-- macOS 15.0+
+- macOS 13.0+
 - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed
 
 ## 📦 Installation
@@ -795,7 +795,7 @@ The interactive CLI provides a real-time testing environment with commands like:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
 
 ## 🔗 Related Projects
 
@@ -803,7 +803,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 🙋‍♂️ [Email Arunesh](hey@arune.sh)
+- 🙋‍♂️ Email Arunesh - hey@arune.sh
 - 📖 [Documentation](https://docs.anthropic.com/en/docs/claude-code)
 - 🐛 [Issues](https://github.com/your-username/ClaudeCodeSwiftSDK/issues)
 - 💬 [Discussions](https://github.com/your-username/ClaudeCodeSwiftSDK/discussions)
